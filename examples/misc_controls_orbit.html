@@ -56,7 +56,9 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				// 禁用了传统的光照模式，这意味着你将使用基于物理的光照模型（PBR）来渲染场景中的光照效果
 				renderer.useLegacyLights = false;
+				// 将渲染器的DOM元素添加到HTML文档的body元素中，使渲染器可以在页面上显示渲染结果
 				document.body.appendChild( renderer.domElement );
 
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -65,7 +67,8 @@
 				// controls
 
 				controls = new OrbitControls( camera, renderer.domElement );
-				controls.listenToKeyEvents( window ); // optional
+
+				 // optional
 
 				//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
 

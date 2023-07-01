@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<style type="text/css">
+	.tg  {border-collapse:collapse;border-color:#93a1a1;border-spacing:0;}
+	.tg td{background-color:#fdf6e3;border-color:#93a1a1;border-style:solid;border-width:1px;color:#002b36;
+		font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg th{background-color:#657b83;border-color:#93a1a1;border-style:solid;border-width:1px;color:#fdf6e3;
+		font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg .tg-2bhk{background-color:#eee8d5;border-color:inherit;text-align:left;vertical-align:top}
+	.tg .tg-sg5v{border-color:inherit;font-size:100%;text-align:left;vertical-align:top}
+	.tg .tg-alz1{background-color:#eee8d5;text-align:left;vertical-align:top}
+	.tg .tg-0lax{text-align:left;vertical-align:top}
+
+	.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg" style="undefined;table-layout: fixed; width: 1484px">
+	<colgroup>
+		<col style="width: 591px">
+		<col style="width: 219px">
+		<col style="width: 30px">
+		<col style="width: 91px">
+		<col style="width: 126px">
+		<col style="width: 149px">
+		<col style="width: 143px">
+		<col style="width: 135px">
+	</colgroup>
+	<thead>
+	<tr>
+		<th class="tg-0lax">Prompt_full text</th>
+		<th class="tg-sg5v">Prompt_3objects</th>
+		<th class="tg-0pky">GT</th>
+		<th class="tg-0pky">Taiyi_full text</th>
+		<th class="tg-0pky">Taiyi_gpt_3objects</th>
+		<th class="tg-0pky">Taiyi_gpt_composition</th>
+		<th class="tg-0pky">Taiyi_gpt_outpainting</th>
+		<th class="tg-0pky">Taiyi_directDiffusion</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="tg-0lax">江南山川的平远之景，山林间有文人对坐于书斋中，笔法粗放纵逸，墨色简洁，有苍茫之意。</td>
+		<td class="tg-2bhk">平远之景|山林间|苍茫之意</td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">画面起首以裴君的草堂为中心展开，草堂轩敞明亮，陈设简洁，堂外古松盘曲。主人正伏案假寐，堂外一童子持帚清扫，体现出闲雅出尘之趣。其后，板桥连岸，春水潺湲，远处青山逶迤，平湖无涯。</td>
+		<td class="tg-2bhk">草堂轩敞明亮|古松盘曲|春水潺湲</td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">画面中一枝梅花横出，枝干秀挺，花朵疏朗。以淡墨点染花瓣，再以浓墨勾点萼蕊，墨色清润</td>
+		<td class="tg-2bhk">梅花枝干秀挺 | 淡墨点染花瓣 | 墨色清润</td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">云遮雾掩，崇山连绵，数尺之后方现曲折的江岸，三两旅人沿路缓行，航船数只待客于山脚渡口。随之则是“惊涛拍岸，卷起千堆雪”，继而孤岭突起，峰回路转，茅舍村屋，行旅往来。最后用茫茫无际的大海终结画面，水天一色，气势磅礴。</td>
+		<td class="tg-2bhk">云遮雾掩|崇山连绵|惊涛拍岸 三两旅人沿路缓行</td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+		<td class="tg-0pky"></td>
+		<td class="tg-2bhk"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">画中有青山碧水、殿宇村舍，栈道、桥梁穿插其间，又有苍松翠柏，茂林修竹，移步换景，令人玩味不尽。山石用小斧劈皴法，再施以青绿重色；树木、建筑刻画细腻精谨，点景人物描绘细致入微。整幅作品布局宏大，细节丰富，色彩浓丽而不失清雅，刻画精细而不琐碎。</td>
+		<td class="tg-alz1">青山碧水 | 栈道桥梁 | 苍松翠柏</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">北固山、焦山、金山，它们之间呈鼎立对峙的犄角之势。其中北固山背临长江，峭壁如削；焦山耸立于江心，犹如“中流砥柱”，山寺隐约，林木苍翠；金山似“江心一朵芙蓉”，塔寺台阁皆依山傍势凿岩而建，形胜天然。</td>
+		<td class="tg-alz1">北固山峭壁如削|焦山犹如中流砥柱|金山塔寺台阁皆依山傍势凿岩而建</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">画卷的开首部分便是吴兴南园一角，主体建筑为一座重檐歇山顶的楼阁，相配小亭栏杆回环曲折，花草树木掩映，庭中有鹤，亭角有花一株，环境幽雅而气象恢宏。楼阁内，马太守正陪二老对坐奕棋；小亭内，二老手扶栏杆，一面赏景一面闲话；另二老或携琴或曳杖，款款而来。此外有童仆衙役陪伴侍候。南园临水而建，湖对岸远渚汀洲，村庄茅舍，树木葱浓，群山耸翠。</td>
+		<td class="tg-alz1">吴兴南园建筑|花草树木掩映|湖对岸远渚汀洲</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">画面上山峰绵延起伏，江河气象万千。其间草木丰茂，溪流潺潺，又有亭台楼阁，野渡小店，商旅行人往来其中。主人公出现在画面右前方的山路上，他骑着毛驴，行色匆匆，身后两名童子，一负酒葫芦，一负书简，正在互相嬉戏。</td>
+		<td class="tg-alz1">山峰绵延起伏 | 江河气象万千 | 主人公行色匆匆</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">图中金山寺寺宇楼台层层相接，一塔拔地而起直指云天，“塔拔山高”，无论近观远眺，总见寺而不见山，有“寺里山”之说。江边，帆影绰绰，人影剪剪。</td>
+		<td class="tg-alz1">金山寺|塔拔云天|帆影江边</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">卷首以玉带桥为开端，长堤卧波，水光潋滟，碧树依依，舟楫往来，游客怡然。堤岸一端长松落碧，浓荫遮日，其间隐隐露出殿宇一角。远处青峰隐约可辨，云气氤氲，幽雅静谧。诗文云：“垂之则有卧波中，衔绶维鱼幻岂虹。歌咏湖山此生惯，威仪青紫若人工。光通潋滟原规月，势委飘萧不碍风。本是印工留下物，而今还复属苏公。</td>
+		<td class="tg-alz1">玉带桥|水光潋滟|青峰隐约可辨</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">卷尾作者自题：“笔正写山横，烟云乱石生。破窗蕉雨过，添却砚池平。十日画成，海天雨霁，红日窗明。</td>
+		<td class="tg-alz1">烟云乱石 | 砚池平静 | 红日窗明</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">描写冬季小雪初霁的渔村山林景色。图中雪山奇松，溪岸渔艇，峰迴路转，步移景易，整个画面意境萧索，笼罩在一片空灵、静寂的氛围之中，有渔夫艰苦劳作。</td>
+		<td class="tg-alz1">渔村山林景色|雪山奇松|渔夫劳作</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">日观晴曦、太华清秋、融峰两色、恒塞积雪、二室争奇。</td>
+		<td class="tg-alz1">日观晴曦|太华清秋|恒塞积雪</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">千岩万壑，溪山行旅”。此图表现绵亘的山势，图中千岩万壑，高峰平台，丛林村舍，溪流飞泉，小桥渔舟以及行旅人等。</td>
+		<td class="tg-alz1">山势巍峨高耸|绵亘不绝的峰峦|清澈溪流潺潺流淌</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	<tr>
+		<td class="tg-0lax">此图描绘水村渔舟、寺庙山居、岩穴幽渺。图中山石、树木行笔松秀稳健，施墨设色富于深浅浓淡的变化，区分出物象的层次；水纹细密，用笔流畅而不板滞；山间弥漫的云气以墨和滕黄两次勾线，近线条处以淡墨晕染，表现出云层的厚度，颇富装饰趣味。画面徐徐展开，步移景易，引观者悠游于吴中的山林胜境之中。</td>
+		<td class="tg-alz1">水村渔舟 | 寺庙山居 | 岩穴幽渺</td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+		<td class="tg-0lax"></td>
+		<td class="tg-alz1"></td>
+	</tr>
+	</tbody>
+</table>
+</body>
+</html>

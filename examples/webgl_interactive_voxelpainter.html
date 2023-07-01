@@ -38,10 +38,13 @@
 		<script type="module">
 
 			import * as THREE from 'three';
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
 
 			let camera, scene, renderer;
 			let plane;
-			let pointer, raycaster, isShiftDown = false;
+			let pointer, raycaster, isShiftDown = false,isAltDown = false;
+			let controls;
 
 			let rollOverMesh, rollOverMaterial;
 			let cubeGeo, cubeMaterial;
@@ -49,7 +52,7 @@
 			const objects = [];
 
 			init();
-			render();
+			animate();
 
 			function init() {
 
@@ -112,8 +115,20 @@
 				document.addEventListener( 'keydown', onDocumentKeyDown );
 				document.addEventListener( 'keyup', onDocumentKeyUp );
 
-				//
+				// -------------------------使用鼠标控制视角------------------------------
+				controls = new OrbitControls( camera, renderer.domElement );
 
+				//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+
+				controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+				controls.dampingFactor = 0.05;
+
+				controls.screenSpacePanning = false;
+
+				controls.minDistance = 100;
+				controls.maxDistance = 1000;
+
+				controls.maxPolarAngle = Math.PI / 2;
 				window.addEventListener( 'resize', onWindowResize );
 
 			}
@@ -152,14 +167,21 @@
 
 			function onPointerDown( event ) {
 
+				// 获得鼠标点击位置的归一化坐标
 				pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 
+				// 从相机指向鼠标位置发出射线
 				raycaster.setFromCamera( pointer, camera );
 
+				// 获取射线与物体的交点
 				const intersects = raycaster.intersectObjects( objects, false );
 
 				if ( intersects.length > 0 ) {
-
+					// intersects数组包含了射线与物体相交的交点对象。每个交点对象都包含了一些属性和方法，其中最常用的属性有：
+					// object：与射线相交的物体。可以通过intersect.object来访问该属性，用于获取与射线相交的具体物体。
+					// point：射线与物体相交的点的位置。可以通过intersect.point来访问该属性，用于获取交点的三维坐标。
+					// face：射线与物体相交的面。可以通过intersect.face来访问该属性，用于获取交点所在的面信息。
+					// uv：射线与物体相交的点在纹理坐标系中的位置。该属性是可选的，不一定所有的交点对象都有这个属性
 					const intersect = intersects[ 0 ];
 
 					// delete cube
@@ -176,13 +198,13 @@
 
 						// create cube
 
-					} else {
+					} else if(!isAltDown)
+					{
 
 						const voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
 						voxel.position.copy( intersect.point ).add( intersect.face.normal );
 						voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
 						scene.add( voxel );
-
 						objects.push( voxel );
 
 					}
@@ -198,6 +220,7 @@
 				switch ( event.keyCode ) {
 
 					case 16: isShiftDown = true; break;
+					case 18: isAltDown = true;break;
 
 				}
 
@@ -208,7 +231,7 @@
 				switch ( event.keyCode ) {
 
 					case 16: isShiftDown = false; break;
-
+					case 18: isAltDown = false; break;
 				}
 
 			}
@@ -216,6 +239,16 @@
 			function render() {
 
 				renderer.render( scene, camera );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+
+				render();
 
 			}
 
