@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.4;
+}
+header {
+  background-color: rgba(231, 231, 231, 0.773);
+  font-size: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  grid-column: 1/-1;
+}
+.note-sale {
+  font-size: 15px;
+  font-weight: bold;
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: -20px;
+  left: -35px;
+  padding: 10px 20px;
+  letter-spacing: 2px;
+}
+
+.title {
+  padding: 15px;
+}
+
+.price {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.more-info {
+  margin-bottom: 23px;
+  font-weight: bold;
+}
+.more-info:link {
+  color: black;
+}
+
+.more-info:visited {
+  color: gray;
+}
+
+.more-info:hover,
+.more-info:active {
+  text-decoration: none;
+}
+
+.detail-info {
+  text-transform: uppercase;
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+.detail-list {
+  list-style: square;
+  margin-left: 25px;
+}
+
+.detail-list li {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.add-card {
+  color: white;
+  background-color: black;
+  border-top: 4px solid black;
+  text-transform: uppercase;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  grid-column: 1/-1;
+}
+
+.add-card:hover {
+  color: black;
+  background-color: white;
+}
+
+.container {
+  margin: 50px auto;
+  width: 950px;
+  border: 4px solid black;
+}
+
+.color {
+  margin-right: 15px;
+  margin-top: 30px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.color-black {
+  background-color: black;
+}
+.color-blue {
+  background-color: blue;
+}
+.color-red {
+  background-color: red;
+}
+.color-yellow {
+  background-color: yellow;
+}
+.color-green {
+  background-color: green;
+}
+.color-brown {
+  background-color: burlywood;
+}
+
+.price-box {
+  flex: 1;
+  margin-top: 25px;
+}
+.detail-box {
+  flex: 1;
+  margin-top: 25px;
+}
+
+.shop-box {
+  display: flex;
+  justify-content: space-between;
+}
+.note {
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+  color: gray;
+  align-items: center;
+}
+.decoration {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 250px 1fr 1fr;
+  column-gap: 40px;
+}

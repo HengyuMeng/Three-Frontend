@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My second three.js app</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+
+<script type="module">
+    import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+    // 设置场景、相机、渲染器
+    const scene = new THREE.Scene();
+    // 第一个参数是视野角度（FOV）。视野角度就是无论在什么时候
+    // 你所能在显示器上看到的场景的范围，它的单位是角度(与弧度区分开)
+    // 第二个参数是长宽比（aspect ratio）。 也就是你用一个物体的宽除以它的高
+    // 第三、第四两个参数是近截面（near）和远截面（far）。
+    // 当物体某些部分比摄像机的远截面远或者比近截面近的时候，该这些部分将不会被渲染到场景中
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    const renderer = new THREE.WebGLRenderer();
+    // 我们可以使用所需要的渲染区域的宽高，来让渲染器渲染出的场景填充满我们的应用程序
+    // 因此，我们可以将渲染器宽高设置为浏览器窗口宽高
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    // 我们将renderer（渲染器）的dom元素（renderer.domElement）添加到我们的HTML文档中
+    // 这就是渲染器用来显示场景给我们看的<canvas>元素
+    document.body.appendChild( renderer.domElement );
+
+    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+
+    //几何+材质才是最终的Mesh
+    const cube = new THREE.Mesh( geometry, material );
+    //在场景中添加mesh，进行渲染
+    scene.add( cube );
+
+    //默认情况下，当我们调用scene.add()的时候，物体将会被添加到(0,0,0)坐标。
+    // 但将使得摄像机和立方体彼此在一起。
+    // 为了防止这种情况的发生，我们只需要将摄像机稍微向外移动一些即可
+    camera.position.z = 5;
+
+    //有点类似Unity中的Update()函数，每帧渲染，渲染出动态效果
+    function animate() {
+        requestAnimationFrame( animate );
+        renderer.render( scene, camera );
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+    }
+    animate();
+</script>
+</body>
+</html>
