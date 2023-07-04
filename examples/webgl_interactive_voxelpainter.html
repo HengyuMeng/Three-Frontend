@@ -25,6 +25,8 @@
 		<!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
 		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+
 
 		<script type="importmap">
 			{
@@ -39,17 +41,32 @@
 
 			import * as THREE from 'three';
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { OBJExporter } from 'three/addons/exporters/OBJExporter.js';
+			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			import JSZip from 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js' ;
+			// JSZip from 'jszip';
 
+			import forEach from "./jsm/libs/chevrotain.module.min.js";
 
+			// 基础变量配置
 			let camera, scene, renderer;
 			let plane;
 			let pointer, raycaster, isShiftDown = false,isAltDown = false;
 			let controls;
 
+			//绘制红色光标
 			let rollOverMesh, rollOverMaterial;
+			// 提供体素的几何与材质
 			let cubeGeo, cubeMaterial;
 
+			// 存放场景中的所有Object
 			const objects = [];
+
+			// 配置导出设置
+			const params = {
+				exportToObj: exportToObj,
+				exportToNpz:exportToNpz
+			};
 
 			init();
 			animate();
@@ -63,8 +80,8 @@
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xf0f0f0 );
 
-				// roll-over helpers
 
+				// roll-over helpers
 				const rollOverGeo = new THREE.BoxGeometry( 50, 50, 50 );
 				rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
 				rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
@@ -95,8 +112,7 @@
 
 				objects.push( plane );
 
-				// lights
-
+				// ---------------------灯光设置----------------------
 				const ambientLight = new THREE.AmbientLight( 0x606060, 3 );
 				scene.add( ambientLight );
 
@@ -109,6 +125,8 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.useLegacyLights = false;
 				document.body.appendChild( renderer.domElement );
+
+				// -----------------添加监听事件---------------------------
 
 				document.addEventListener( 'pointermove', onPointerMove );
 				document.addEventListener( 'pointerdown', onPointerDown );
@@ -131,6 +149,66 @@
 				controls.maxPolarAngle = Math.PI / 2;
 				window.addEventListener( 'resize', onWindowResize );
 
+				// ------------------导出GUI设置---------------------------------
+				const gui = new GUI();
+
+				gui.add( params, 'exportToObj' ).name( 'Export OBJ' );
+				gui.add(params,'exportToNpz').name('Export NPZ')
+				gui.open();
+
+			}
+
+			function exportToObj() {
+
+				const exporter = new OBJExporter();
+				const result = exporter.parse( scene );
+				saveString( result, 'object.obj' );
+
+			}
+
+
+			// 以 async 关键字开头的函数是异步函数(async function)
+			async function exportToNpz() {
+				const objectPositions = [];
+				objects.forEach(function (object)
+				{
+					if (object!==plane)
+					{
+						// 获取体素的位置坐标
+						const position = object.position.clone();
+
+						// 将坐标保存到数组中
+						objectPositions.push(position);
+					}
+				})
+
+				const npzData = {};
+
+				// 将体素位置信息转换为适当的数据结构，以供导出
+				// 将位置信息存储在 npzData 对象中，以适当的键值对形式
+				npzData['positions'] = objectPositions.map(function (position) {
+					return [position.x, position.y, position.z];
+				});
+
+				// 将 npzData 导出为 .npz 文件
+				const npzFile = new JSZip();
+				npzFile.file('data.json', JSON.stringify(npzData));
+				// 异步函数的函数体中可以使用 await 关键字来等待一个 Promise 对象的解决（resolved）值，
+				// 这样可以将异步代码看起来像同步代码一样执行
+				const content = await npzFile.generateAsync({type: 'blob'});
+
+				// 下载 .npz 文件
+				downloadFile(content, 'object_positions.npz');
+			}
+
+			// 下载文件函数
+			function downloadFile(content, fileName)
+
+			{
+				const link = document.createElement('a');
+				link.href = URL.createObjectURL(content);
+				link.download = fileName;
+				link.click();
 			}
 
 			function onWindowResize() {
@@ -252,6 +330,41 @@
 
 			}
 
+			const link = document.createElement( 'a' );
+			link.style.display = 'none';
+			document.body.appendChild( link );
+
+			function save( blob, filename ) {
+
+				link.href = URL.createObjectURL( blob );
+				link.download = filename;
+				link.click();
+
+			}
+
+			function saveString( text, filename ) {
+
+				save( new Blob( [ text ], { type: 'text/plain' } ), filename );
+
+			}
+
+
+			// 遍历场景导出体素位置的一种方法
+			function exportPositionFromScene()
+			{
+				// scene.traverse这个方法代表着在场景中的所有物体上执行一个函数。可以将一个函数作为参数传递给traverse方法，
+				// 这个函数将会在每一个子物体上调用。由于场景是一个对象树，所以如果子物体本身还有子物体，traverse方法会在所有的子物体上调用，
+				// 直到遍历完场景树中的所有物体为止
+				 scene.traverse(function (object) {
+				 	if (object instanceof THREE.Mesh) {
+				 		// 获取物体的位置坐标
+				 		const position = object.position.clone();
+
+				 		// 将坐标保存到数组中
+				 		objectPositions.push(position);
+				}
+				});
+			}
 		</script>
 
 	</body>
