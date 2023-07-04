@@ -25,7 +25,6 @@
 		<!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
 		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
 
 
 		<script type="importmap">
@@ -43,8 +42,7 @@
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			import { OBJExporter } from 'three/addons/exporters/OBJExporter.js';
 			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-			import JSZip from 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js' ;
-			// JSZip from 'jszip';
+
 
 			import forEach from "./jsm/libs/chevrotain.module.min.js";
 
@@ -65,7 +63,7 @@
 			// 配置导出设置
 			const params = {
 				exportToObj: exportToObj,
-				exportToNpz:exportToNpz
+				exportToPly:exportToPly
 			};
 
 			init();
@@ -153,7 +151,7 @@
 				const gui = new GUI();
 
 				gui.add( params, 'exportToObj' ).name( 'Export OBJ' );
-				gui.add(params,'exportToNpz').name('Export NPZ')
+				gui.add( params,'exportToPly').name('Export Ply')
 				gui.open();
 
 			}
@@ -168,7 +166,7 @@
 
 
 			// 以 async 关键字开头的函数是异步函数(async function)
-			async function exportToNpz() {
+			async function exportToPly() {
 				const objectPositions = [];
 				objects.forEach(function (object)
 				{
@@ -181,6 +179,7 @@
 						objectPositions.push(position);
 					}
 				})
+				console.log(objectPositions)
 
 				const npzData = {};
 
@@ -189,27 +188,20 @@
 				npzData['positions'] = objectPositions.map(function (position) {
 					return [position.x, position.y, position.z];
 				});
-
-				// 将 npzData 导出为 .npz 文件
-				const npzFile = new JSZip();
-				npzFile.file('data.json', JSON.stringify(npzData));
-				// 异步函数的函数体中可以使用 await 关键字来等待一个 Promise 对象的解决（resolved）值，
-				// 这样可以将异步代码看起来像同步代码一样执行
-				const content = await npzFile.generateAsync({type: 'blob'});
-
-				// 下载 .npz 文件
-				downloadFile(content, 'object_positions.npz');
+				console.log(npzData)
+				//
+				// // 将 npzData 导出为 .npz 文件
+				// const npzFile = new JSZip.();
+				// npzFile.file('data.json', JSON.stringify(npzData));
+				// // 异步函数的函数体中可以使用 await 关键字来等待一个 Promise 对象的解决（resolved）值，
+				// // 这样可以将异步代码看起来像同步代码一样执行
+				// const content = await npzFile.generateAsync({type: 'blob'});
+				//
+				// // 下载 .npz 文件
+				// downloadFile(content, 'object_positions.npz');
 			}
 
-			// 下载文件函数
-			function downloadFile(content, fileName)
 
-			{
-				const link = document.createElement('a');
-				link.href = URL.createObjectURL(content);
-				link.download = fileName;
-				link.click();
-			}
 
 			function onWindowResize() {
 
@@ -314,6 +306,7 @@
 
 			}
 
+
 			function render() {
 
 				renderer.render( scene, camera );
@@ -364,6 +357,14 @@
 				 		objectPositions.push(position);
 				}
 				});
+			}
+
+			// 下载文件函数
+			function downloadFile(content, fileName)
+			{
+				link.href = URL.createObjectURL(content);
+				link.download = fileName;
+				link.click();
 			}
 		</script>
 
