@@ -189,6 +189,23 @@
 					return [position.x, position.y, position.z];
 				});
 				console.log(npzData)
+
+				fetch('http://127.0.0.1:5000/process_data', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(npzData),
+				})
+					.then(response => response.json())
+					.then(processedData => {
+						// 在这里处理从服务器返回的处理后的数据
+						console.log(processedData);
+					})
+					.catch(error => {
+						// 处理错误
+						console.error('Error:', error);
+					});
 				//
 				// // 将 npzData 导出为 .npz 文件
 				// const npzFile = new JSZip.();
