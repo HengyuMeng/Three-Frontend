@@ -42,6 +42,7 @@
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			import { OBJExporter } from 'three/addons/exporters/OBJExporter.js';
 			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
 
 			import forEach from "./jsm/libs/chevrotain.module.min.js";
@@ -147,11 +148,12 @@
 				controls.maxPolarAngle = Math.PI / 2;
 				window.addEventListener( 'resize', onWindowResize );
 
-				// ------------------导出GUI设置---------------------------------
+
+			//---------------------------导出ply,obj GUI设置---------------------------------
 				const gui = new GUI();
 
 				gui.add( params, 'exportToObj' ).name( 'Export OBJ' );
-				gui.add( params,'exportToPly').name('Export Ply')
+				gui.add( params,'exportToPly').name('Generate Mesh')
 				gui.open();
 
 			}
@@ -181,6 +183,55 @@
 				})
 				console.log(objectPositions)
 
+			// -----------------------------obj 导入设置-------------------------------------------
+			// 	function loadModel() {
+			//
+			// 		object.traverse( function ( child ) {
+			//
+			// 			if ( child.isMesh ) child.material.map = texture;
+			//
+			// 		} );
+			//
+			// 		object.position.y = - 0.95;
+			// 		object.scale.setScalar( 0.01 );
+			// 		scene.add( object );
+			//
+			// 		render();
+			//
+			// 	}
+			//
+			// 	const manager = new THREE.LoadingManager( loadModel );
+			//
+			// 	// texture
+			//
+			// 	// const textureLoader = new THREE.TextureLoader( manager );
+			// 	// const texture = textureLoader.load( 'textures/uv_grid_opengl.jpg', render );
+			// 	// texture.colorSpace = THREE.SRGBColorSpace;
+			//
+			// 	// model
+			//
+			// 	function onProgress( xhr ) {
+			//
+			// 		if ( xhr.lengthComputable ) {
+			//
+			// 			const percentComplete = xhr.loaded / xhr.total * 100;
+			// 			console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' );
+			//
+			// 		}
+			//
+			// 	}
+			//
+			// 	function onError() {}
+			//
+			// 	const loader = new OBJLoader( manager );
+			// 	loader.load( 'models/obj/male02/male02.obj', function ( obj ) {
+			//
+			// 		object = obj;
+			//
+			// 	}, onProgress, onError );
+
+				//-----------------------------------------------------------------------------------------
+
 				const npzData = {};
 
 				// 将体素位置信息转换为适当的数据结构，以供导出
@@ -197,13 +248,15 @@
 					},
 					body: JSON.stringify(npzData),
 				})
-					.then(response => response.json())
-					.then(processedData => {
-						// 在这里处理从服务器返回的处理后的数据
-						console.log(processedData);
+					.then(response => response.blob())
+					.then(blob => {
+						const downloadLink = document.createElement('a');
+						downloadLink.href = URL.createObjectURL(blob);
+						downloadLink.download = 'model.obj';
+						downloadLink.click();
+						console.log("download model done!")
 					})
 					.catch(error => {
-						// 处理错误
 						console.error('Error:', error);
 					});
 				//
